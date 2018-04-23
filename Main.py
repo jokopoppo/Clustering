@@ -76,43 +76,42 @@ data=data[int(data.__len__()*(10/100)):]
 anstest= ans[0:int(ans.__len__()*(10/100))]
 ans=ans[int(ans.__len__()*(10/100)):]
 
-k=2
-percent=int(data.__len__()*1/k)
+for r in range(2,8):
+    k=r
+    percent=int(data.__len__()*1/k)
 
-dat = []
-answer=[]
-for i in range(k):
-    dat.append(data[i*percent:percent*(i+1)])
-    answer.append(ans[i*percent:percent*(i+1)])
-n=0
-while(True):
-    n+=1
-    meanC=[]
-    errC=[]
-
+    dat = []
+    answer=[]
     for i in range(k):
-        print("Number of C",i,"=",dat[i].__len__())
-        meanC.append(mean(dat[i]))
-        errC.append(error(dat[i],meanC[i]))
+        dat.append(data[i*percent:percent*(i+1)])
+        answer.append(ans[i*percent:percent*(i+1)])
+    n=0
+    while(True and n<40):
+        n+=1
+        meanC=[]
+        errC=[]
 
-    Err=sum(errC)
-    print("ERROR =",Err)
-    datc,answer=distance(dat,meanC,answer)
-    if(datc == dat):
-        break
-    dat=datc
+        for i in range(k):
+            # print("Number of C",i,"=",dat[i].__len__())
+            meanC.append(mean(dat[i]))
+            errC.append(error(dat[i],meanC[i]))
 
-print(n)
+        Err=sum(errC)
+        # print(n,"ERROR =",Err)
+        datc,answer=distance(dat,meanC,answer)
+        if(datc == dat):
+            break
+        dat=datc
 
-c=0
-for i in range(k):
+    print(n,end="   ")
 
-    if(answer[i].__len__() > 20000):
-        c+=answer[i].count(0)
-    else:
-        c+=answer[i].count(1)
-print()
-print(c,"%")
+    c=0
+    for i in range(k):
+        if answer[i].count(0) > answer[i].count(1):
+            c+=answer[i].count(0)
+        else:
+            c+=answer[i].count(1)
+    print(c)
 
 
 
