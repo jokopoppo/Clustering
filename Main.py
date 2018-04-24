@@ -52,6 +52,8 @@ def distance(dat,mean,ans):
     for i in range(k):
         group.append([])
         a.append([])
+
+    # find distance from mean and change the new group
     for c in range(dat.__len__()):
         for j in range(dat[c].__len__()):
             d=[]
@@ -61,6 +63,8 @@ def distance(dat,mean,ans):
             index, value = min(enumerate(d), key=operator.itemgetter(1))
             group[index].append(dat[c][j])
             a[index].append(ans[c][j])
+
+    # return new group of all data
     return group,a
 
 data = readExel('Data.xls')
@@ -76,6 +80,7 @@ data=data[int(data.__len__()*(10/100)):]
 anstest= ans[0:int(ans.__len__()*(10/100))]
 ans=ans[int(ans.__len__()*(10/100)):]
 
+# loop for find the best K
 for r in range(2,8):
     k=r
     percent=int(data.__len__()*1/k)
@@ -86,6 +91,7 @@ for r in range(2,8):
         dat.append(data[i*percent:percent*(i+1)])
         answer.append(ans[i*percent:percent*(i+1)])
     n=0
+    # loop for fit the data in k group
     while(True and n<40):
         n+=1
         meanC=[]
@@ -103,15 +109,15 @@ for r in range(2,8):
             break
         dat=datc
 
-    print(n,end="   ")
+    print("K=",k,"N=",n)
 
-    c=0
-    for i in range(k):
-        if answer[i].count(0) > answer[i].count(1):
-            c+=answer[i].count(0)
-        else:
-            c+=answer[i].count(1)
-    print(c)
+    # c=0
+    # for i in range(k):
+    #     if answer[i].count(0) > answer[i].count(1):
+    #         c+=answer[i].count(0)
+    #     else:
+    #         c+=answer[i].count(1)
+    # print(c)
 
 
 
